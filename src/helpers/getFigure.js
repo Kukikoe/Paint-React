@@ -35,4 +35,4 @@ let getFigure = (ctx, size, figure, x, y) => {
     return ctx;
 };
 
-export default getFigure;
+export { getFigure };

@@ -1,5 +1,5 @@
 import React from 'react';
-import './css/light-theme.css';
+import '../css/light-theme.css';
 import Logo from "./Logo";
 import ButtonBrush from "./ButtonBrush";
 import ButtonClear from "./ButtonClear";

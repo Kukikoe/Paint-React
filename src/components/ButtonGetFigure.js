@@ -1,8 +1,8 @@
 import React from 'react';
-import oval from "./img/oval.svg";
-import squareBlack from "./img/square-black.svg";
-import triangle from "./img/triangle.svg";
-import hexagon from "./img/hexagon.svg";
+import oval from "../img/oval.svg";
+import squareBlack from "../img/square-black.svg";
+import triangle from "../img/triangle.svg";
+import hexagon from "../img/hexagon.svg";
 
 function ButtonGetFigure(props) {
     let getFigure = (event) => {

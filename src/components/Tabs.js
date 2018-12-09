@@ -1,5 +1,5 @@
 import React from 'react';
-import './css/light-theme.css';
+import '../css/light-theme.css';
 import Canvas from "./Canvas";
 import TabLink from "./TabLink";
 

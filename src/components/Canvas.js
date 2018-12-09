@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import getFigure from './getFigure';
+import { getFigure } from '../helpers';
 
 class Canvas extends Component {
     constructor(props) {

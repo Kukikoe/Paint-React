@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import './css/App.css';
-import ButtonContainer from "./ButtonContainer";
-import Tabs from "./Tabs";
-import getFigure from './getFigure';
+import ButtonContainer from "./components/ButtonContainer";
+import Tabs from "./components/Tabs";
+import { getFigure } from './helpers';
 
 class App extends Component {
     constructor(props) {

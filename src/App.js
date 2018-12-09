@@ -12,7 +12,18 @@ class App extends Component {
                 {
                     id: 1,
                     isActive: false,
-                    layers: [],
+                    layers: [
+                        {
+                            id: 1,
+                            isActive: false,
+                            image: ""
+                        },
+                        {
+                            id: 2,
+                            isActive: true,
+                            image: ""
+                        }
+                    ],
                     settings: {
                         fillColor: "#000000",
                         mode: "brush",
@@ -24,7 +35,18 @@ class App extends Component {
                 {
                     id: 2,
                     isActive: true,
-                    layers: [],
+                    layers: [
+                        {
+                            id: 1,
+                            isActive: false,
+                            image: ""
+                        },
+                        {
+                            id: 2,
+                            isActive: true,
+                            image: ""
+                        }
+                    ],
                     settings: {
                         fillColor: "#000000",
                         mode: "brush",
@@ -37,14 +59,6 @@ class App extends Component {
 
             offsetX: "",
             offsetY: "",
-            clear: false,
-            /*            settings: {
-                            fillColor: "#000000",
-                            mode: "brush",
-                            figure: "",
-                            size: 10,
-                            cursor: "auto",
-                        }*/
         };
     }
 
@@ -197,9 +211,83 @@ class App extends Component {
         this.setState({tabs});
     };
 
+    openLayer = (id) => {
+        const tabs = this.state.tabs.map(tab => {
+            if (tab.isActive) {
+                const layers = tab.layers.map(layer => {
+                    if (layer.id === id) {
+                        layer = {
+                            ...layer,
+                            isActive: true
+                        };
+                    } else {
+                        layer = {
+                            ...layer,
+                            isActive: false
+                        };
+                    }
+                    return layer;
+                });
+                tab.layers = layers;
+            }
+            return tab;
+        });
+        this.setState({tabs});
+    };
+
+    deleteLayer = (id) => {
+        const tabs = this.state.tabs.map(tab => {
+            if (tab.isActive) {
+                const layers = tab.layers.filter(layer => layer.id !== id);
+                tab.layers = layers;
+            }
+            return tab;
+        });
+        this.setState({tabs}, () => {
+            this.state.tabs.map(tab => {
+                if (tab.isActive) {
+                    if (tab.layers.length) {
+                        this.openLayer(tab.layers[tab.layers.length - 1].id);
+                    } else {
+                        return;
+                    }
+                }
+                return tab;
+            });
+        });
+    };
+
+    addLayer = () => {
+
+        let id;
+        const tabs = this.state.tabs.map(tab => {
+            if (tab.isActive) {
+                if (tab.layers.length) {
+                    id = tab.layers[tab.layers.length - 1].id + 1;
+                } else {
+                    id = 1;
+                }
+                const layer = {
+                    id,
+                    isActive: false,
+                    image: ""
+                };
+                tab.layers = tab.layers.concat(layer);
+            }
+            return tab;
+        });
+
+        this.setState({tabs}, () => {
+            this.openLayer(id);
+        });
+    };
+
     render() {
         const { tabs } = this.state;
-        const activeTab = tabs.filter(tab => tab.isActive)[0];
+        let activeTab = tabs.filter(tab => tab.isActive)[0];
+        if (!activeTab) {
+            return null;
+        }
         const color = activeTab.settings.fillColor;
         const size = activeTab.settings.size;
         return (
@@ -220,6 +308,9 @@ class App extends Component {
                     onAdd={this.addTab}
                     tabs={tabs}
                     getCoord={this.getCoordHandle}
+                    openLayer={this.openLayer}
+                    deleteLayer={this.deleteLayer}
+                    addLayer={this.addLayer}
                 />
             </div>
         );

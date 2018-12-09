@@ -14,8 +14,16 @@ class Canvas extends Component {
         if (this.state.isPainting) {
             const ctx = event.target.getContext('2d');
             ctx.fillStyle = this.props.settings.fillColor;
-
-            ctx.fillRect(event.nativeEvent.offsetX - this.props.settings.size / 2, event.nativeEvent.offsetY - this.props.settings.size / 2, this.props.settings.size, this.props.settings.size);
+            ctx.beginPath();
+            ctx.arc(
+                event.nativeEvent.offsetX - this.props.settings.size / 2,
+                event.nativeEvent.offsetY - this.props.settings.size / 2,
+                this.props.settings.size,
+                50,
+                Math.PI * 2,
+                true);
+            ctx.fill();
+           // ctx.fillRect(event.nativeEvent.offsetX - this.props.settings.size / 2, event.nativeEvent.offsetY - this.props.settings.size / 2, this.props.settings.size, this.props.settings.size);
 
         }
     };
@@ -41,7 +49,6 @@ class Canvas extends Component {
     };
 
     clear = (event) => {
-        console.log(event.target)
         const ctx = event.target.getContext('2d');
         ctx.clearRect(0, 0, event.target.width, event.target.height);
     };
@@ -49,13 +56,14 @@ class Canvas extends Component {
     render() {
         return (
                 <canvas
+                    className={`canvas ${this.props.active ? "active" : ""}`}
                     onMouseMove={this.mouseMoveHandler}
                     onMouseDown={this.mouseDownHandler}
                     onMouseUp={this.mouseUpHandler}
                     onMouseOut={this.mouseOutHandler}
-                    width="1300"
-                    height="600"
-                    style = {{border: "1px solid black", cursor: this.props.settings.cursor}}
+                    width={document.documentElement.clientWidth - 300}
+                    height={document.documentElement.clientHeight - 100}
+                    style = {{cursor: this.props.settings.cursor}}
                 >
                 </canvas>
         );

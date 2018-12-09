@@ -335,3 +335,14 @@ body {
   width: 100px;
 }
 
+.canvas {
+  width: calc(100vw - 300px - 17px);
+  height: 100%;
+  position: absolute;
+  pointer-events: none;
+}
+.canvas.active {
+  pointer-events: auto;
+}
+
+

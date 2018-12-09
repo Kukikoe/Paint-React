@@ -2,10 +2,10 @@ import React from 'react';
 import '../css/light-theme.css';
 import Canvas from "./Canvas";
 import TabLink from "./TabLink";
+import Layers from "./Layers";
 
 
-function Tabs({ tabs, getCoord, onClose, onOpen, onAdd }) {
-
+function Tabs({ tabs, getCoord, onClose, onOpen, onAdd, openLayer, deleteLayer, addLayer }) {
     return (
         <div className="paint-container">
             <div className="paint-block">
@@ -27,10 +27,17 @@ function Tabs({ tabs, getCoord, onClose, onOpen, onAdd }) {
                     {tabs.map(tab => {
                         return (
                             <div key={tab.id} className={`tabcontent ${tab.isActive ? "active" : ""}`}>
-                                <Canvas
-                                    settings={tab.settings}
-                                    getCoord={getCoord}
-                                />
+                                <Layers layers={tab.layers} onOpen={openLayer} onDelete={deleteLayer} onAdd={addLayer}/>
+                                {tab.layers.map(layer => {
+                                    return (
+                                        <Canvas
+                                            key={layer.id}
+                                            settings={tab.settings}
+                                            getCoord={getCoord}
+                                            active={layer.isActive}
+                                        />
+                                    )
+                                })}
                             </div>
                             )
                     })}
